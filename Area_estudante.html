@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Estudante</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url('ceri.jpg') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            color: #fff; /* Cor do texto */
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.5); /* Fundo escuro com transparência */
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #fff; /* Cor do título */
+        }
+        .btn-primary {
+            background-color: #1e90ff;
+            border-color: #1e90ff;
+        }
+        .btn-primary:hover {
+            background-color: #ff6347;
+            border-color: #ff6347;
+        }
+        label {
+            font-weight: bold;
+            color: #fff; /* Cor do rótulo */
+        }
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.8); /* Fundo do campo de entrada com transparência */
+            color: #333; /* Cor do texto nos campos */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Área do Estudante</h2>
+        <form id="formLogin">
+            <div class="form-group">
+                <label for="numero_estudante">Número de Estudante:</label>
+                <input type="text" class="form-control" id="numero_estudante" name="numero_estudante" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Ver Notas</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('formLogin').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Obtém o número de estudante
+            let numeroEstudante = document.getElementById('numero_estudante').value.trim();
+
+            // Armazena o número de estudante no localStorage
+            localStorage.setItem('numeroEstudanteAtual', numeroEstudante);
+
+            // Redireciona para a página de visualização de notas
+            window.location.href = 'ver_notas.html';
+        });
+    </script>
+</body>
+</html>

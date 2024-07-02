@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscrição - Instituto Politécnico de Camacupa</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: #333; /* Fundo escuro */
+            color: #fff; /* Letras brancas */
+            font-weight: bold; /* Texto em negrito */
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            background-image: url('central.jpg'); /* Substitua com o caminho da sua imagem de fundo */
+            background-size: cover; /* Ajusta a imagem para cobrir toda a área */
+            background-position: center; /* Centraliza a imagem */
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.8); /* Fundo escuro com transparência */
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+        .btn-primary {
+            background-color: #1e90ff;
+            border-color: #1e90ff;
+        }
+        .btn-primary:hover {
+            background-color: #ff6347;
+            border-color: #ff6347;
+        }
+        label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Inscrição - Instituto Politécnico de Camacupa</h2>
+        <form id="formInscricao">
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" class="form-control" id="nome" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="telefone">Telefone:</label>
+                <input type="tel" class="form-control" id="telefone" name="telefone" required>
+            </div>
+            <div class="form-group">
+                <label for="curso">Curso:</label>
+                <input type="text" class="form-control" id="curso" name="curso" readonly>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Enviar Inscrição</button>
+        </form>
+        <div id="mensagemInscricao" style="display: none;">
+            <div class="alert alert-success mt-3" role="alert">
+                Inscrição realizada com sucesso! Seu número de estudante é: <span id="numeroEstudante"></span>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Função para gerar número de estudante aleatório
+        function gerarNumeroEstudante() {
+            let numeroAleatorio = Math.floor(Math.random() * 100000); // Gera número entre 0 e 99999
+            return '2000' + numeroAleatorio.toString().padStart(4, '0'); // Garante que o número tenha 6 dígitos e comece com 2000
+        }
+
+        // Captura o curso escolhido da URL
+        function capturarCursoEscolhido() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const curso = urlParams.get('curso');
+            return curso ? curso : '';
+        }
+
+        // Adiciona evento de envio ao formulário
+        document.getElementById('formInscricao').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Obtém os dados do formulário
+            let nome = document.getElementById('nome').value.trim();
+            let email = document.getElementById('email').value.trim();
+            let telefone = document.getElementById('telefone').value.trim();
+            let curso = document.getElementById('curso').value;
+
+            // Gera o número de estudante
+            let numeroEstudante = gerarNumeroEstudante();
+
+            // Salva os dados no localStorage
+            let inscricao = {
+                nome: nome,
+                email: email,
+                telefone: telefone,
+                curso: curso,
+                numeroEstudante: numeroEstudante
+            };
+
+            localStorage.setItem('inscricao', JSON.stringify(inscricao));
+
+            // Exibe a mensagem de inscrição com o número de estudante gerado
+            document.getElementById('mensagemInscricao').style.display = 'block';
+            document.getElementById('numeroEstudante').textContent = numeroEstudante;
+
+            // Limpa o formulário após enviar a inscrição
+            document.getElementById('formInscricao').reset();
+        });
+
+        // Define o curso escolhido na página
+        document.getElementById('curso').value = capturarCursoEscolhido();
+    </script>
+</body>
+</html>

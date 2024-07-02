@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lançar Notas - Instituto Politécnico de Camacupa</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> <!-- Font Awesome para ícones -->
+    <style>
+        body {
+            background: linear-gradient(45deg, #1e90ff, #ff6347);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            background-image: url('ceri.jpg'); /* Substitua com o caminho da sua imagem de fundo */
+            background-size: cover; /* Ajusta a imagem para cobrir toda a área */
+            background-position: center; /* Centraliza a imagem */
+            color: white; /* Cor do texto */
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.8); /* Fundo escuro com transparência */
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #ffffff; /* Cor do título */
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-control {
+            background-color: #ffffff; /* Cor de fundo dos campos de formulário */
+            color: #333333; /* Cor do texto nos campos de formulário */
+            border-color: #cccccc; /* Cor da borda dos campos de formulário */
+        }
+        .form-control:focus {
+            background-color: #ffffff; /* Cor de fundo ao focar no campo */
+            border-color: #ff6347; /* Cor da borda ao focar no campo */
+            box-shadow: 0 0 0 0.2rem rgba(255, 99, 71, 0.5); /* Sombra ao focar no campo */
+        }
+        .btn-primary {
+            background-color: #1e90ff; /* Cor de fundo do botão */
+            border-color: #1e90ff; /* Cor da borda do botão */
+            color: #ffffff; /* Cor do texto no botão */
+            font-weight: bold; /* Negrito no texto do botão */
+        }
+        .btn-primary:hover {
+            background-color: #ff6347; /* Cor de fundo ao passar o mouse */
+            border-color: #ff6347; /* Cor da borda ao passar o mouse */
+        }
+        label {
+            font-weight: bold; /* Negrito nas etiquetas */
+            color: #ffffff; /* Cor das etiquetas */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2><i class="fas fa-edit"></i> Lançar Notas - Instituto Politécnico de Camacupa</h2>
+        <form id="formLancarNotas">
+            <div class="form-group">
+                <label for="numero_estudante">Número de Estudante:</label>
+                <input type="text" class="form-control" id="numero_estudante" name="numero_estudante" required>
+            </div>
+            <div class="form-group">
+                <label for="disciplina">Disciplina:</label>
+                <input type="text" class="form-control" id="disciplina" name="disciplina" required>
+            </div>
+            <div class="form-group">
+                <label for="nota">Nota:</label>
+                <input type="text" class="form-control" id="nota" name="nota" required>
+            </div>
+            <div class="form-group">
+                <label for="trimestre">Trimestre:</label>
+                <select class="form-control" id="trimestre" name="trimestre" required>
+                    <option value="1">1º Trimestre</option>
+                    <option value="2">2º Trimestre</option>
+                    <option value="3">3º Trimestre</option>
+                    <option value="exame">Exame</option>
+                    <option value="recurso">Recurso</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="tipo_nota">Tipo de Nota:</label>
+                <select class="form-control" id="tipo_nota" name="tipo_nota" required>
+                    <option value="avaliacao_continua">Avaliação Contínua</option>
+                    <option value="prova_professor">Prova do Professor</option>
+                    <option value="prova_trimestral">Prova Trimestral</option>
+                    <option value="exame_final">Exame Final</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Adicionar Nota</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Função para armazenar os dados de lançamento de notas no localStorage
+        function lancarNotas(numeroEstudante, disciplina, nota, trimestre, tipoNota) {
+            let notasLancadas = JSON.parse(localStorage.getItem('notasLancadas')) || [];
+            notasLancadas.push({ numeroEstudante: numeroEstudante, disciplina: disciplina, nota: nota, trimestre: trimestre, tipoNota: tipoNota });
+            localStorage.setItem('notasLancadas', JSON.stringify(notasLancadas));
+        }
+
+        // Adiciona evento de envio ao formulário de lançamento de notas
+        document.getElementById('formLancarNotas').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Obtém os dados do formulário
+            let numeroEstudante = document.getElementById('numero_estudante').value.trim();
+            let disciplina = document.getElementById('disciplina').value.trim();
+            let nota = document.getElementById('nota').value.trim();
+            let trimestre = document.getElementById('trimestre').value;
+            let tipoNota = document.getElementById('tipo_nota').value;
+
+            // Armazena os dados no localStorage
+            lancarNotas(numeroEstudante, disciplina, nota, trimestre, tipoNota);
+
+            // Limpa os campos do formulário após envio
+            document.getElementById('numero_estudante').value = '';
+            document.getElementById('disciplina').value = '';
+            document.getElementById('nota').value = '';
+            document.getElementById('trimestre').selectedIndex = 0;
+            document.getElementById('tipo_nota').selectedIndex = 0;
+
+            // Exibe uma mensagem ou redireciona para outra página após lançar as notas (opcional)
+            alert('Nota lançada com sucesso!');
+
+            // Redireciona para a página de ver notas (simulado)
+            window.location.href = 'ver_notas.html';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('ceri.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            color: white; /* Cor do texto */
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.8); /* Fundo escuro com transparência */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .container h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #ffffff; /* Cor do título */
+            font-weight: bold; /* Negrito no título */
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-control {
+            background-color: #ffffff; /* Fundo do campo de formulário */
+            color: #333333; /* Cor do texto nos campos de formulário */
+            border-color: #cccccc; /* Cor da borda dos campos de formulário */
+        }
+        .form-control:focus {
+            background-color: #ffffff; /* Cor de fundo ao focar no campo */
+            border-color: #ff6600; /* Cor da borda ao focar no campo */
+            box-shadow: 0 0 0 0.2rem rgba(255, 102, 0, 0.5); /* Sombra ao focar no campo */
+        }
+        .btn-primary {
+            background-color: #ff6600; /* Cor de fundo do botão */
+            border-color: #ff6600; /* Cor da borda do botão */
+            padding: 10px 20px; /* Espaçamento interno do botão */
+            font-size: 18px; /* Tamanho da fonte do botão */
+            margin-top: 20px; /* Espaçamento superior do botão */
+        }
+        .btn-primary:hover {
+            background-color: #ff8533; /* Cor de fundo ao passar o mouse */
+            border-color: #ff8533; /* Cor da borda ao passar o mouse */
+        }
+        p.text-center {
+            color: #ffffff; /* Cor do texto */
+            text-align: center;
+            margin-top: 20px;
+        }
+        p.text-center a {
+            color: #ffffff; /* Cor do link */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Registro</h2>
+        <form id="formRegistro">
+            <div class="form-group">
+                <label for="nome">Nome Completo:</label>
+                <input type="text" class="form-control" id="nome" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="usuario">Usuário:</label>
+                <input type="text" class="form-control" id="usuario" name="usuario" required>
+            </div>
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                <input type="password" class="form-control" id="senha" name="senha" required>
+            </div>
+            <div class="form-group">
+                <label for="tipo_usuario">Tipo de Usuário:</label>
+                <select class="form-control" id="tipo_usuario" name="tipo_usuario" required>
+                    <option value="aluno">Aluno</option>
+                    <option value="professor">Professor</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+        </form>
+        <p class="text-center mt-3"><a href="login.html">Já tem uma conta? Entrar</a></p>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Função para armazenar os dados de registro no localStorage
+        function armazenarRegistro(nome, usuario, senha, tipoUsuario) {
+            let registros = JSON.parse(localStorage.getItem('registros')) || [];
+            registros.push({ nome: nome, usuario: usuario, senha: senha, tipoUsuario: tipoUsuario });
+            localStorage.setItem('registros', JSON.stringify(registros));
+        }
+
+        // Adiciona evento de envio ao formulário
+        document.getElementById('formRegistro').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Obtém os dados do formulário
+            let nome = document.getElementById('nome').value.trim();
+            let usuario = document.getElementById('usuario').value.trim();
+            let senha = document.getElementById('senha').value.trim();
+            let tipoUsuario = document.getElementById('tipo_usuario').value;
+
+            // Armazena os dados no localStorage
+            armazenarRegistro(nome, usuario, senha, tipoUsuario);
+
+            // Redireciona para a página adequada com base no tipo de usuário
+            if (tipoUsuario === 'aluno') {
+                window.location.href = 'cursos.html';
+            } else if (tipoUsuario === 'professor') {
+                window.location.href = 'lança_notas.html';
+            }
+        });
+    </script>
+</body>
+</html>
+
